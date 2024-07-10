@@ -3,6 +3,7 @@ name: Deployment
 on: 
   push:
     branches: [main]
+    
 jobs:
   deploy:
     name: Deploy
@@ -10,14 +11,14 @@ jobs:
     timeout-minutes: 30
 
     steps:
-    - name: Setup go
-      uses: actions/setup-node@v2
-      with:
-        go-version: "1.22"
+    - name: Check out code
+      uses: actions/checkout@v4
 
-    - name: Checkout repo
-      uses: actions/checkout@v2
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22'
 
     - name: Build
-      run: scripts/buildprod.sh
+      run: ./scripts/buildprod.sh
          
