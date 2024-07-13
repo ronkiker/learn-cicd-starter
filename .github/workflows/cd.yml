@@ -30,9 +30,13 @@ jobs:
       name: 'Auth to Google'
       uses: 'google-github-actions/auth@v2'
       with: 
-        #credentials_json: '{{ secrets.GCP_CREDENTIALS }}'
-        workload_identity_provider: 'projects/131355886353/locations/global/workloadIdentityPools/github/attribute.repository/ronkiker/learn-cicd-starter'
-        service_account: 'cloud-run-deployer-99@notely-429119.iam.gserviceaccount.com'
+        credentials_json: '{{ secrets.GCP_CREDENTIALS }}'
+    #     project_id: 'notely-429119'
+    #     workload_identity_provider: 'projects/131355886353/locations/global/workloadIdentityPools/github/providers/github'
+    #     service_account: 'cloud-run-deployer-99@notely-429119.iam.gserviceaccount.com'
+    
+    # - run: |-
+    #     curl -H 'Bearer: ${{ steps.auth.outputs.access_token }}' https://..
 
     - name: 'Google Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
