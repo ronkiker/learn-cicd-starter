@@ -22,8 +22,8 @@ jobs:
       with:
         go-version: '1.22'
 
-    - uses: mscno/setup-goose@v1
-
+    - name: Build app
+      run: ./scripts/buildprod.sh
 
     - id: 'auth'
       name: 'Auth to Google'
@@ -40,10 +40,11 @@ jobs:
     - name: Build Docker Image
       run: gcloud builds submit --region=us-central1 --tag us-central1-docker.pkg.dev/notely-429119/notely-ar-repo/ronkiker/notely/latest .
 
+    - name: Install goose
+      run: go install github.com/pressly/goose/v3/cmd/goose@latest
+
     - name: Deploy Database migration
       run: ./scripts/migrateup.sh  
-    
-    - run: goose up
 
     - name: Deploy to Cloud Run
       run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-429119/notely-ar-repo/ronkiker/notely/latest --region us-central1 --allow-unauthenticated --project notely-429119 --max-instances=4
